@@ -1,0 +1,7 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/cocuschallenge
+    username: postgres
+    password: postgres
+  liquibase:
+    change-log: classpath:/liquibase/master.xml
