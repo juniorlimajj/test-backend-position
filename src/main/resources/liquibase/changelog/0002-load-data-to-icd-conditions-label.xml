@@ -1,0 +1,13 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+  <changeSet author="jose_junior" id="0">
+    <loadData file="liquibase/data/conditions.csv"
+      separator=","
+      tableName="icd_conditions_label">
+      <column name="icd_10" type="varchar"/>
+      <column name="icd_10_description" type="varchar"/>
+    </loadData>
+  </changeSet>
+</databaseChangeLog>
