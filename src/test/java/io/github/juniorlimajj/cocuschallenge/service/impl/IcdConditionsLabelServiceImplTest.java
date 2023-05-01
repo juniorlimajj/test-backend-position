@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.data.redis.connection.RedisConnection;
@@ -25,7 +26,9 @@ import org.springframework.http.ResponseEntity;
 
 import io.github.juniorlimajj.cocuschallenge.entity.IcdConditionsLabel;
 import io.github.juniorlimajj.cocuschallenge.repository.IcdConditionsLabelRepository;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+@ExtendWith(SpringExtension.class)
 public class IcdConditionsLabelServiceImplTest {
 
   @Mock
