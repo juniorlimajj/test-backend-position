@@ -18,9 +18,9 @@ jobs:
         with:
           java-version: '11'
       - name: Build with Maven
-        run: mvn -B package --file pom.xml
+        run: mvn clean package install
       - name: Run tests with Maven
-        run: mvn test --file pom.xml
+        run: mvn test 
       - name: Validate build and tests
         run: |
           if [ ${{ steps.build.outcome }} == 'success' ] && [ ${{ steps.tests.outcome }} == 'success' ]; then
