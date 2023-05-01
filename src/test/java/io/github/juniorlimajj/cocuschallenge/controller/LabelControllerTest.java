@@ -4,7 +4,6 @@ import static org.mockito.Mockito.when;
 import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import io.github.juniorlimajj.cocuschallenge.controller.LabelController;
 import io.github.juniorlimajj.cocuschallenge.entity.IcdConditionsLabel;
 import io.github.juniorlimajj.cocuschallenge.service.IcdConditionsLabelService;
 import java.util.Collections;
@@ -12,7 +11,6 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -44,10 +42,8 @@ public class LabelControllerTest {
     final ResponseEntity<List<IcdConditionsLabel>> response = new ResponseEntity<>(labels, HttpStatus.OK);
     final String url = "/api/get/all/labels";
 
-    // Mock service method call
     when(this.icdConditionsLabelService.getAllLabels()).thenReturn(response);
 
-    // Test endpoint
     this.mockMvc.perform(MockMvcRequestBuilders.get(url))
         .andExpect(status().isOk())
         .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_VALUE))
