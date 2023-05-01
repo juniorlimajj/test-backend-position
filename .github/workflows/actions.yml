@@ -1,26 +1,38 @@
-name: Validate Build and Tests
+name: Build and Test
+
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
+
 jobs:
-  #Test's job
-  tests:
-    name: Unit tests
-    #Run on Ubuntu using the latest version
+  build-and-test:
+    name: Build and Test
     runs-on: ubuntu-latest
-    #Job's steps
+
     steps:
-      #Check-out your repository under $GITHUB_WORKSPACE, so your workflow can access it
-      - uses: actions/checkout@v1
-      #Set up JDK 11
-      - name: Set up JDK
-        uses: actions/setup-java@v1
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
         with:
-          java-version: '11'
+          java-version: 11
+
+      - name: Cache Maven dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-maven-
+
       - name: Build with Maven
-        run: mvn clean package install
+        run: mvn clean package -DskipTests
+
       - name: Run tests with Maven
-        run: mvn test 
+        run: mvn test
+
       - name: Validate build and tests
         run: |
           if [ ${{ steps.build.outcome }} == 'success' ] && [ ${{ steps.tests.outcome }} == 'success' ]; then
