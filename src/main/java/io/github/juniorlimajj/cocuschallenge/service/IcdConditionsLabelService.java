@@ -6,4 +6,8 @@ import org.springframework.http.ResponseEntity;
 
 public interface IcdConditionsLabelService {
   ResponseEntity<List<IcdConditionsLabel>> getAllLabels();
+  ResponseEntity<IcdConditionsLabel> createIcdConditionsLabel(final IcdConditionsLabel icdConditionsLabel);
+  ResponseEntity<IcdConditionsLabel> getLabelById(final Long id);
+  IcdConditionsLabel getLabel(final Long id);
+
 }

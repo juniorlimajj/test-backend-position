@@ -1,25 +1,24 @@
 package io.github.juniorlimajj.cocuschallenge.service.impl;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
 
+import io.github.juniorlimajj.cocuschallenge.controller.LabelController;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.redis.connection.RedisConnection;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.http.HttpStatus;
@@ -70,8 +69,8 @@ public class IcdConditionsLabelServiceImplTest {
     when(this.icdConditionsLabelRepository.findAll()).thenReturn(expectedLabels);
     final ResponseEntity<List<IcdConditionsLabel>> response = this.icdConditionsLabelServiceImpl.getAllLabels();
 
-    Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
-    Assertions.assertEquals(expectedLabels, response.getBody());
+    assertEquals(HttpStatus.OK, response.getStatusCode());
+    assertEquals(expectedLabels, response.getBody());
     verify(this.redisTemplate.opsForValue()).get("allLabels");
   }
 
@@ -92,17 +91,34 @@ public class IcdConditionsLabelServiceImplTest {
     when(this.redisTemplate.opsForValue().get(anyString())).thenReturn(expectedLabels);
     final ResponseEntity<List<IcdConditionsLabel>> response = this.icdConditionsLabelServiceImpl.getAllLabels();
 
-    Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
-    Assertions.assertEquals(expectedLabels, response.getBody());
+    assertEquals(HttpStatus.OK, response.getStatusCode());
+    assertEquals(expectedLabels, response.getBody());
   }
 
   @Test
-  @DisplayName("Get all labels - error")
   public void testGetAllLabels_Error() {
     when(this.redisTemplate.opsForValue().get(anyString())).thenThrow(new RuntimeException("Redis error"));
     final ResponseEntity<List<IcdConditionsLabel>> response = this.icdConditionsLabelServiceImpl.getAllLabels();
 
-    Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
-    Assertions.assertNull(response.getBody());
+    assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+    assertNull(response.getBody());
+  }
+
+  @Test
+  public void testCreateIcdConditionsLabel() {
+    final IcdConditionsLabel icdConditionsLabel = IcdConditionsLabel.builder()
+        .id(1L)
+        .code("code")
+        .codeDescription("description")
+        .build();
+    final IcdConditionsLabel savedIcdConditionsLabel = IcdConditionsLabel.builder()
+        .id(1L)
+        .code("code")
+        .codeDescription("description")
+        .build();
+    when(this.icdConditionsLabelRepository.save(any(IcdConditionsLabel.class))).thenReturn(savedIcdConditionsLabel);
+    final ResponseEntity<IcdConditionsLabel> response = this.icdConditionsLabelServiceImpl.createIcdConditionsLabel(icdConditionsLabel);
+    assertEquals(HttpStatus.CREATED, response.getStatusCode());
+    assertEquals(savedIcdConditionsLabel, response.getBody());
   }
 }

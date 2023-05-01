@@ -1,5 +1,8 @@
 package io.github.juniorlimajj.cocuschallenge.controller;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -49,5 +52,16 @@ public class LabelControllerTest {
         .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(MockMvcResultMatchers.jsonPath("[0].id", equalTo(1)))
         .andExpect(MockMvcResultMatchers.jsonPath("[0].code", equalTo("label1")));
+  }
+
+
+  @Test
+  public void testCreateLabel() {
+    final IcdConditionsLabel icdConditionsLabel = new IcdConditionsLabel();
+    final ResponseEntity<IcdConditionsLabel> expectedResponse = new ResponseEntity<>(icdConditionsLabel, HttpStatus.CREATED);
+    when(this.icdConditionsLabelService.createIcdConditionsLabel(any(IcdConditionsLabel.class))).thenReturn(expectedResponse);
+    final ResponseEntity<IcdConditionsLabel> response = this.icdConditionsLabelService.createIcdConditionsLabel(icdConditionsLabel);
+    verify(this.icdConditionsLabelService).createIcdConditionsLabel(icdConditionsLabel);
+    assertEquals(expectedResponse, response);
   }
 }
