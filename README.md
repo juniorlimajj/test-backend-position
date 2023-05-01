@@ -1,3 +1,5 @@
+[![Validate Build and Tests](https://github.com/CocusPT-development/josejunior_27042023/actions/workflows/actions.yml/badge.svg?branch=main)](https://github.com/CocusPT-development/josejunior_27042023/actions/workflows/actions.yml)
+
 # Description
 
 The main objective of this Challenge is to implement a Rest API using Java language to manage a specific resource: Doctor Label.
