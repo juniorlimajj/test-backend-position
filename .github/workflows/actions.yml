@@ -32,11 +32,3 @@ jobs:
 
       - name: Run tests with Maven
         run: mvn test
-
-      - name: Validate build and tests
-        run: |
-          if [ ${{ steps.build.outcome }} == 'success' ] && [ ${{ steps.tests.outcome }} == 'success' ]; then
-            echo "Build and tests passed!"
-          else
-            echo "Build or tests failed!"
-            exit 1
