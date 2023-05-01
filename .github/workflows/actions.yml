@@ -1,32 +1,34 @@
-name: Validate Build and Tests
+name: Build and Test
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
-  build:
+  build-and-test:
+    name: Build and Test
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v1
 
-    - name: Set up Java
-      uses: actions/setup-java@v2
-      with:
-        java-version: '17'
+      - name: Set up JDK 17
+        uses: actions/setup-java@v1
+        with:
+          java-version: 17
 
-    - name: Build with Maven
-      run: mvn -B package --file pom.xml
+      - name: Cache Maven dependencies
+        uses: actions/cache@v1
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-maven-
 
-    - name: Test with Maven
-      run: mvn test --file pom.xml
+      - name: Build with Maven
+        run: mvn clean package -X -DskipTests
 
-    - name: Upload test results
-      uses: actions/upload-artifact@v2
-      with:
-        name: test-results
-        path: target/surefire-reports/TEST-*.xml
+      - name: Run tests with Maven
+        run: mvn test -X
