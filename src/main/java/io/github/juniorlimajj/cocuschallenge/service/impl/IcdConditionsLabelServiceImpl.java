@@ -132,7 +132,7 @@ public class IcdConditionsLabelServiceImpl implements IcdConditionsLabelService 
     if (labelObj.isPresent()) {
       this.icdConditionsLabelRepository.deleteById(id);
       this.redisTemplate.delete(LABEL_BY_ID_CACHE_KEY + id);
-      logger.info("IcdConditionsLabel with id " + id + " has been deleted."); // added logger.info
+      logger.info("IcdConditionsLabel with id " + id + " has been deleted.");
       return new ResponseEntity<>(HttpStatus.OK);
     }
     return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -153,7 +153,7 @@ public class IcdConditionsLabelServiceImpl implements IcdConditionsLabelService 
       labelToUpdate.setCodeDescription(icdConditionsLabel.getCodeDescription());
       final IcdConditionsLabel updatedLabel = this.icdConditionsLabelRepository.save(labelToUpdate);
       this.redisTemplate.opsForValue().set(LABEL_BY_ID_CACHE_KEY + id, updatedLabel);
-      logger.info("IcdConditionsLabel with id " + id + " has been updated."); // added logger.info
+      logger.info("IcdConditionsLabel with id " + id + " has been updated.");
       return new ResponseEntity<>(updatedLabel, HttpStatus.OK);
     }
     return new ResponseEntity<>(HttpStatus.NOT_FOUND);
