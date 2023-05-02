@@ -64,4 +64,43 @@ public class LabelControllerTest {
     verify(this.icdConditionsLabelService).createIcdConditionsLabel(icdConditionsLabel);
     assertEquals(expectedResponse, response);
   }
+
+  @Test
+  public void testGetLabelById() {
+    final long id = 1L;
+    final IcdConditionsLabel icdConditionsLabel = new IcdConditionsLabel();
+    icdConditionsLabel.setId(id);
+    final ResponseEntity<IcdConditionsLabel> expectedResponse = ResponseEntity.ok(icdConditionsLabel);
+
+    when(this.icdConditionsLabelService.getLabelById(id)).thenReturn(expectedResponse);
+
+    final ResponseEntity<IcdConditionsLabel> actualResponse = this.icdConditionsLabelService.getLabelById(id);
+
+    assertEquals(expectedResponse, actualResponse);
+  }
+
+  @Test
+  public void deleteLabel_shouldCallServiceToDeleteLabel() {
+    final long id = 1L;
+    final ResponseEntity<IcdConditionsLabel> expectedResponse = ResponseEntity.ok().build();
+    when(this.icdConditionsLabelService.deleteIcdConditionsLabel(id)).thenReturn(expectedResponse);
+
+    final ResponseEntity<IcdConditionsLabel> actualResponse = this.icdConditionsLabelService.deleteIcdConditionsLabel(id);
+
+    verify(this.icdConditionsLabelService).deleteIcdConditionsLabel(id);
+    assertEquals(expectedResponse, actualResponse);
+  }
+
+  @Test
+  public void updateLabel_shouldCallServiceToUpdateLabel() {
+    final long id = 1L;
+    final IcdConditionsLabel icdConditionsLabel = new IcdConditionsLabel();
+    final ResponseEntity<IcdConditionsLabel> expectedResponse = ResponseEntity.ok().body(icdConditionsLabel);
+    when(this.icdConditionsLabelService.updateIcdConditionsLabel(id, icdConditionsLabel)).thenReturn(expectedResponse);
+
+    final ResponseEntity<IcdConditionsLabel> actualResponse = this.icdConditionsLabelService.updateIcdConditionsLabel(id, icdConditionsLabel);
+
+    verify(this.icdConditionsLabelService).updateIcdConditionsLabel(id, icdConditionsLabel);
+    assertEquals(expectedResponse, actualResponse);
+  }
 }

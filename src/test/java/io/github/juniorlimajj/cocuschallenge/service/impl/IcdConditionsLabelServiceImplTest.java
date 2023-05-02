@@ -1,6 +1,7 @@
 package io.github.juniorlimajj.cocuschallenge.service.impl;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
@@ -11,6 +12,7 @@ import io.github.juniorlimajj.cocuschallenge.controller.LabelController;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.util.Optional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -120,5 +122,28 @@ public class IcdConditionsLabelServiceImplTest {
     final ResponseEntity<IcdConditionsLabel> response = this.icdConditionsLabelServiceImpl.createIcdConditionsLabel(icdConditionsLabel);
     assertEquals(HttpStatus.CREATED, response.getStatusCode());
     assertEquals(savedIcdConditionsLabel, response.getBody());
+  }
+
+  @Test
+  public void testGetLabel() {
+    final Long id = 1L;
+    final IcdConditionsLabel label = new IcdConditionsLabel();
+    label.setId(id);
+    when(this.icdConditionsLabelRepository.findById(id)).thenReturn(Optional.of(label));
+
+    final IcdConditionsLabel result = this.icdConditionsLabelServiceImpl.getLabel(id);
+
+    assertNotNull(result);
+    assertEquals(id, result.getId());
+  }
+
+  @Test
+  public void testGetLabelNotFound() {
+    final Long id = 1L;
+    when(this.icdConditionsLabelRepository.findById(id)).thenReturn(Optional.empty());
+
+    final IcdConditionsLabel result = this.icdConditionsLabelServiceImpl.getLabel(id);
+
+    assertNull(result);
   }
 }

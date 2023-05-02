@@ -9,5 +9,6 @@ public interface IcdConditionsLabelService {
   ResponseEntity<IcdConditionsLabel> createIcdConditionsLabel(final IcdConditionsLabel icdConditionsLabel);
   ResponseEntity<IcdConditionsLabel> getLabelById(final Long id);
   IcdConditionsLabel getLabel(final Long id);
-
+  ResponseEntity<IcdConditionsLabel> deleteIcdConditionsLabel(final Long id);
+  ResponseEntity<IcdConditionsLabel> updateIcdConditionsLabel(final Long id, final IcdConditionsLabel icdConditionsLabel);
 }
