@@ -10,5 +10,5 @@ public interface CaseService {
   ResponseEntity<Case> addCase(Case caseObj);
   ResponseEntity<Case> updateCase(Long id, Case caseObj);
   ResponseEntity<Case> deleteCase(Long id);
-
+  Case getCase(Long id);
 }

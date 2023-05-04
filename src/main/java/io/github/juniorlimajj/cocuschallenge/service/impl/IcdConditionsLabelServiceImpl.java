@@ -152,7 +152,6 @@ public class IcdConditionsLabelServiceImpl implements IcdConditionsLabelService 
       labelToUpdate.setCode(icdConditionsLabel.getCode());
       labelToUpdate.setCodeDescription(icdConditionsLabel.getCodeDescription());
       final IcdConditionsLabel updatedLabel = this.icdConditionsLabelRepository.save(labelToUpdate);
-      this.redisTemplate.opsForValue().set(LABEL_BY_ID_CACHE_KEY + id, updatedLabel);
       logger.info("IcdConditionsLabel with id " + id + " has been updated.");
       return new ResponseEntity<>(updatedLabel, HttpStatus.OK);
     }
