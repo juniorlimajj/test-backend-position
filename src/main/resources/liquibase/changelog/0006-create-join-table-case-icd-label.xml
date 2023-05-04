@@ -1,0 +1,25 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+  <changeSet author="jose_junior" id="0">
+    <createTable tableName="case_icd_conditions_label">
+      <column name="case_id" type="bigint"/>
+      <column name="icd_conditions_label_id" type="bigint"/>
+    </createTable>
+  </changeSet>
+
+  <changeSet author="jose_junior" id="1">
+    <addForeignKeyConstraint baseColumnNames="id" baseTableName="case"
+      constraintName="fk_case"
+      referencedColumnNames="id"
+      referencedTableName="case"/>
+    <addForeignKeyConstraint baseColumnNames="id"
+      baseTableName="icd_conditions_label"
+      constraintName="fk_icd_conditions_label"
+      referencedColumnNames="id"
+      referencedTableName="icd_conditions_label"/>
+  </changeSet>
+
+</databaseChangeLog>

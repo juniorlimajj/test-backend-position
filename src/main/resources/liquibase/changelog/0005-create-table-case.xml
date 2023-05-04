@@ -1,0 +1,39 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+  <changeSet author="jose_junior" id="0">
+    <createTable tableName="case">
+      <column name="id" type="int">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="description" type="varchar(255)"/>
+    </createTable>
+  </changeSet>
+
+  <changeSet author="jose_junior" id="1">
+    <createSequence sequenceName="sq_case" startValue="1" incrementBy="1"/>
+  </changeSet>
+
+  <changeSet author="jose_junior" id="2">
+    <addColumn tableName="case">
+      <column name="doctor_id" type="bigint"/>
+      <column name="icd_conditions_label_id" type="bigint"/>
+    </addColumn>
+    <addForeignKeyConstraint baseColumnNames="doctor_id" baseTableName="case"
+      constraintName="fk_case_doctor" referencedColumnNames="id" referencedTableName="doctor"/>
+    <addForeignKeyConstraint baseColumnNames="icd_conditions_label_id" baseTableName="case"
+      constraintName="fk_case_icd_conditions_label" referencedColumnNames="id"
+      referencedTableName="icd_conditions_label"/>
+  </changeSet>
+
+  <changeSet author="jose_junior" id="3">
+    <modifyDataType tableName="case" columnName="description" newDataType="text"/>
+  </changeSet>
+
+  <changeSet author="jose_junior" id="4">
+    <addColumn tableName="case">
+      <column name="time_to_label" type="varchar"/>
+    </addColumn>
+  </changeSet>
+</databaseChangeLog>

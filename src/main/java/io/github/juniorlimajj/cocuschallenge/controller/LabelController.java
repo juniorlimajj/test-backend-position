@@ -41,7 +41,7 @@ public class LabelController {
    * Handles HTTP GET requests to retrieve all IcdConditionsLabel objects.
    * @return A ResponseEntity containing a List of IcdConditionsLabel objects.
    */
-  @GetMapping("/get/all/labels")
+  @GetMapping("/label/get/all")
   public @ResponseBody ResponseEntity<List<IcdConditionsLabel>> getAllIcdConditionsLabels() {
     logger.info("Getting all labels");
     return this.icdConditionsLabelService.getAllLabels();
@@ -52,7 +52,7 @@ public class LabelController {
    * @param id The ID of the IcdConditionsLabel object to retrieve.
    * @return A ResponseEntity containing the requested IcdConditionsLabel object.
    */
-  @GetMapping("/get/label/{id}")
+  @GetMapping("/label/get/{id}")
   public ResponseEntity<IcdConditionsLabel> getLabelById(@PathVariable("id") final long id) {
     logger.info("Getting label by id '{}'", id);
     return this.icdConditionsLabelService.getLabelById(id);
@@ -63,7 +63,7 @@ public class LabelController {
    * @param icdConditionsLabel The IcdConditionsLabel object to create.
    * @return A ResponseEntity containing the newly created IcdConditionsLabel object.
    */
-  @PostMapping("/create/label")
+  @PostMapping("/label/create")
   public ResponseEntity<IcdConditionsLabel> createLabel(@RequestBody final IcdConditionsLabel icdConditionsLabel) {
     logger.info("Creating a new label");
     return this.icdConditionsLabelService.createIcdConditionsLabel(icdConditionsLabel);
@@ -74,7 +74,7 @@ public class LabelController {
    * @param id The ID of the IcdConditionsLabel object to delete.
    * @return A ResponseEntity indicating success or failure of the deletion operation.
    */
-  @DeleteMapping("/delete/label/{id}")
+  @DeleteMapping("/label/delete/{id}")
   public ResponseEntity<Void> deleteLabel(@PathVariable("id") final long id) {
     logger.info("Deleting label with id '{}'", id);
     this.icdConditionsLabelService.deleteIcdConditionsLabel(id);
@@ -87,7 +87,7 @@ public class LabelController {
    * @param icdConditionsLabel The updated IcdConditionsLabel object.
    * @return A ResponseEntity containing the updated IcdConditionsLabel object.
    */
-  @PatchMapping("/update/label/{id}")
+  @PatchMapping("/label/update/{id}")
   public ResponseEntity<IcdConditionsLabel> updateLabel(@PathVariable("id") final long id, @RequestBody final IcdConditionsLabel icdConditionsLabel) {
     logger.info("Updating label with id '{}'", id);
     return this.icdConditionsLabelService.updateIcdConditionsLabel(id, icdConditionsLabel);
