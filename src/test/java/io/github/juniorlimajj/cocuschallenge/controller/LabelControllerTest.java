@@ -41,9 +41,10 @@ public class LabelControllerTest {
 
   @Test
   public void testGetAllIcdConditionsLabels() throws Exception {
-    final List<IcdConditionsLabel> labels = Collections.singletonList(new IcdConditionsLabel(1L, "label1","label1 desc"));
+    final List<IcdConditionsLabel> labels = Collections.singletonList(new IcdConditionsLabel(
+        1L, "label1","label1 desc",null));
     final ResponseEntity<List<IcdConditionsLabel>> response = new ResponseEntity<>(labels, HttpStatus.OK);
-    final String url = "/api/get/all/labels";
+    final String url = "/api/label/get/all";
 
     when(this.icdConditionsLabelService.getAllLabels()).thenReturn(response);
 

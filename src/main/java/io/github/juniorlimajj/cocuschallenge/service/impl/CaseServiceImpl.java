@@ -7,7 +7,6 @@ package io.github.juniorlimajj.cocuschallenge.service.impl;
 
 import io.github.juniorlimajj.cocuschallenge.entity.Case;
 import io.github.juniorlimajj.cocuschallenge.repository.CaseRepository;
-import io.github.juniorlimajj.cocuschallenge.repository.IcdConditionsLabelRepository;
 import io.github.juniorlimajj.cocuschallenge.service.CaseService;
 import java.util.List;
 import java.util.Optional;
@@ -30,8 +29,6 @@ public class CaseServiceImpl implements CaseService {
 
   private static final Logger logger = LoggerFactory.getLogger(CaseServiceImpl.class);
 
-  private final IcdConditionsLabelRepository icdConditionsLabelRepository;
-
   private static final String ALL_CASES_CACHE_KEY = "allCases";
 
   private static final String CASE_BY_ID_CACHE_KEY = "case_";
@@ -46,10 +43,9 @@ public class CaseServiceImpl implements CaseService {
    */
   @Autowired
   public CaseServiceImpl(final CaseRepository caseRepository,
-      final RedisTemplate<String, Object> redisTemplate, final IcdConditionsLabelRepository icdConditionsLabelRepository) {
+      final RedisTemplate<String, Object> redisTemplate) {
     this.caseRepository = caseRepository;
     this.redisTemplate = redisTemplate;
-    this.icdConditionsLabelRepository = icdConditionsLabelRepository;
   }
 
   /**
