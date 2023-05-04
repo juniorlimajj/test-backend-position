@@ -54,7 +54,7 @@ public class IcdConditionsLabelServiceImpl implements IcdConditionsLabelService 
       if (labels == null) {
         logger.info("Cache miss. Retrieving all labels from database");
         labels = this.icdConditionsLabelRepository.findAll();
-        this.redisTemplate.opsForValue().set(ALL_LABELS_CACHE_KEY, labels, TTL_SECONDS, TimeUnit.SECONDS);
+        this.redisTemplate.opsForValue().set(ALL_LABELS_CACHE_KEY, labels);
         logger.info("Stored all labels in Redis cache with key '{}' and TTL of {} seconds", ALL_LABELS_CACHE_KEY, TTL_SECONDS);
       } else {
         logger.info("Retrieved all labels from Redis cache with key '{}'", ALL_LABELS_CACHE_KEY);
@@ -152,7 +152,6 @@ public class IcdConditionsLabelServiceImpl implements IcdConditionsLabelService 
       labelToUpdate.setCode(icdConditionsLabel.getCode());
       labelToUpdate.setCodeDescription(icdConditionsLabel.getCodeDescription());
       final IcdConditionsLabel updatedLabel = this.icdConditionsLabelRepository.save(labelToUpdate);
-      this.redisTemplate.opsForValue().set(LABEL_BY_ID_CACHE_KEY + id, updatedLabel);
       logger.info("IcdConditionsLabel with id " + id + " has been updated.");
       return new ResponseEntity<>(updatedLabel, HttpStatus.OK);
     }
